@@ -1,0 +1,255 @@
+<?php
+include('../connection.php');
+include('../includes/header.php');
+if (isset($_REQUEST['submit'])) {
+
+    $customerName = $_REQUEST['customerName'];
+    $mobile = $_REQUEST['mobile'];
+    $altNumber = $_REQUEST['altNumber'];
+    $passenderNumber = $_REQUEST['passenderNumber'];
+    $fromLocation = $_REQUEST['fromLocation'];
+    $fromAddress = $_REQUEST['fromAddress'];
+    $fromState = $_REQUEST['fromState'];
+    $toLocation = $_REQUEST['toLocation'];
+    $toAddress = $_REQUEST['toAddress'];
+    $tostate = $_REQUEST['tostate'];
+    $bookDate = $_REQUEST['bookDate'];
+    $bookTime = $_REQUEST['bookTime'];
+    $pickUpTime = $_REQUEST['pickUpTime'];
+    // $customerName=$_REQUEST['customerName'];
+
+    $bQuery = "INSERT INTO `booking`(`customerName`, 
+    `mobile`, `altNumber`, `passenderNumber`, 
+    `fromLocation`, `fromAddress`, `fromState`,
+     `toLocation`, `toAddress`, `tostate`,
+      `bookDate`, `bookTime`,
+     `pickUpTime`) VALUES ('$customerName','$mobile','$altNumber',
+     '$passenderNumber','$fromLocation','$fromAddress',
+     '$fromState','$toLocation','$toAddress',
+     '$tostate','$bookDate','$bookTime','$pickUpTime')";
+
+    print_r($bQuery);
+    $db->query($bQuery);
+    echo "<br/>";
+    echo "<br/>";
+    print_r($_REQUEST);
+
+
+    if (isset($_REQUEST['returnBooking'])) {
+        $r_date = $_REQUEST['r_date'];
+        $r_time = $_REQUEST['r_time'];
+        $pickUpTime = $_REQUEST['pickUpTime'];
+        $location = $_REQUEST['location'];
+        $passenderNumber = $_REQUEST['passenderNumber'];
+        $returnAddress = $_REQUEST['returnAddress'];
+        $state = $_REQUEST['state'];
+        // print_r($_REQUEST);
+        $rBookingQuery = "INSERT INTO `returnbooking`(`r_location`, `r_address`, `state`, `r_date`, `r_time`, `r_pick_up_time`, `passenger_number`) 
+    VALUES ('$location','$returnAddress','$state','$r_date','$r_time','$pickUpTime','$passenderNumber')";
+
+        $db->query($rBookingQuery);
+
+        print_r($rBookingQuery);
+    }
+}
+?>
+
+<head>
+    <style>
+        .onclickHide {
+            display: none;
+        }
+    </style>
+</head>
+<div>
+</div>
+<div class="bg-img">
+    <form action="" method="post">
+        <table border="0">
+            <tr>
+                <td>
+                    <label for="customername">Customer Name:
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="customerName" id="customername" placeholder="Enter Your Name">
+                </td>
+            </tr>
+            <tr>
+                <td> <label for="mobile">Mobile</label></td>
+                <td><input type="number" name="mobile" id="mobile" placeholder="Enter Your Mobile "></td>
+            </tr>
+            <tr>
+                <td><label for="altNumber">Alter Number</label></td>
+                <td><input type="text" name="altNumber" placeholder="Enter Your Alternet Mobile"></td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="passenderNumber">Passender:</label>
+                </td>
+                <td>
+                    <input type="number" name="passenderNumber" id="passenderNumber" placeholder="How Many Persons?">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="fromLoc">From Location :</label>
+                </td>
+                <td>
+                    <select name="fromLocation" id="fromLocation">
+                        <option value="navsari">Navsari</option>
+                        <option value="surat">Surat</option>
+                        <option value="baroda">baroda</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="from">From Address:</label>
+                </td>
+                <td>
+                    <textarea name="fromAddress" id="" cols="20" rows="5" placeholder="Enter Your Address Manualy"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="fromState">From State</label></td>
+                <td><select name="fromState" id="fromState">
+                        <option value="gujarat">Gujarat</option>
+                        <option value="mahrastra">Mahrastra</option>
+                        <option value="pune">Pure</option>
+                    </select></td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="toLoc">To Location :</label>
+                </td>
+                <td>
+                    <select name="toLocation" id="toLcation">
+                        <option value="navsari">Navsari</option>
+                        <option value="surat">Surat</option>
+                        <option value="baroda">baroda</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="toAddress">To Address:</label>
+                </td>
+                <td>
+                    <textarea name="toAddress" id="" cols="20" rows="5" placeholder="Enter Your Address Manualy"></textarea>
+                </td>
+            </tr>
+
+            <tr>
+                <td><label for="toStat">To State</label></td>
+                <td><select name="tostate" id="tostate">
+                        <option value="gujarat">Gujarat</option>
+                        <option value="mahrastra">Mahrastra</option>
+                        <option value="pune">Pure</option>
+                    </select></td>
+            </tr>
+            <tr>
+                <td><label for="date">Date</label></td>
+                <td>
+                    <input type="date" name="bookDate" id="date">
+                    <label for="time">Time</label>
+                    <input type="time" name="bookTime" id="time">
+                </td>
+            </tr>
+            <tr>
+                <td><label for="pickUpTime">Pick Up Time</label></td>
+                <td> <input type="time" name="pickUpTime" id="pickUpTime"></td>
+            </tr>
+            <td><button>Book Your Ride</button></td>
+        </table>
+    </form>
+    <!-- ////////////////////Return Ride///////////////////// -->
+    <input type="checkbox" id="rr" value="yes" onclick="myCheckBox()">
+
+    <script>
+        function myCheckBox() {
+            if (document.getElementById('rr').checked) {
+                document.getElementById('onclickHide').style.display = "inline";
+
+            } else {
+                document.getElementById('onclickHide').style.display = "none";
+
+            }
+        }
+    </script>
+
+    <label for="returnRied">Return Ride Book</label>
+    <form action=" " method="POST">
+
+        <table border="0" id="onclickHide" style="display: none;">
+            <tr>
+
+                <td colspan="2" align="center">
+
+                </td>
+
+            </tr>
+            <tr>
+
+                <td><label for="returndate">Return Date</label></td>
+                <td> <input type="date" name="r_date">
+                    <label for="returntime">Time </label>
+                    <input type="time" name="r_time">
+                </td>
+
+            </tr>
+            <tr>
+                <td><label for="pickUpTime">Pick Up Time</label></td>
+                <td> <input type="time" name="pickUpTime"></td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="returnLoc">Return Location :</label>
+                </td>
+                <td>
+                    <select name="location" id="location">
+                        <option value="navsari">Navsari</option>
+                        <option value="surat">Surat</option>
+                        <option value="baroda">baroda</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="passenderNumber">Passender:</label>
+                </td>
+                <td>
+                    <input type="number" name="passenderNumber" id="passenderNumber" placeholder="How Many Persons?">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="returnAddress">Return Address:</label>
+                </td>
+                <td>
+                    <textarea name="returnAddress" id="" cols="20" rows="5" placeholder="Enter Your Address Manualy"></textarea>
+                </td>
+            </tr>
+
+            <tr>
+                <td><label for="returnStat">Return State</label></td>
+                <td><select name="state" id="state">
+                        <option value="gujarat">Gujarat</option>
+                        <option value="mahrastra">Mahrastra</option>
+                        <option value="pune">Pure</option>
+                    </select></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <button name="returnBooking" value="submit">Book</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div>
+
+</div>
+<?php
+include('../includes/footer.php');
+?>
